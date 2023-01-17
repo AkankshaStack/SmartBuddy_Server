@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "root",
+    "password": "mysqlserver@DEEPMZ22",
+    "database": "smart_buddy",
+    "host": "43.205.131.157",
+    "port": 3300,
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
