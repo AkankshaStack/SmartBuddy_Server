@@ -6,6 +6,7 @@ const fs = require("fs");
 const MySQLEvents = require("@rodrigogs/mysql-events");
 const mysql = require("mysql");
 
+const customerRoutes = require("./routes/customer.routes");
 const authRoutes = require("./routes/auth.routes");
 const retailRoutes = require("./routes/retail.routes");
 const contextualRoutes = require("./routes/contextual.routes");
@@ -13,6 +14,8 @@ const surveyRoutes = require("./routes/survey.route");
 const gameplayRoutes = require("./routes/gameplay.routes");
 const gameRoutes = require("./routes/game.routes");
 const descriptiveRoutes = require("./routes/descriptive.routes");
+const BarCodeScanRoutes = require("./routes/barCodeScan.routes");
+const CctvStreamRoutes = require("./routes/cctv.routes")
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
@@ -23,6 +26,7 @@ const customCss = fs.readFileSync(process.cwd() + "/swagger.css", "utf8");
 const { database } = require("./mysql/connectionVerify");
 
 const DescriptivePlay = require("./models/descriptiveplay.model");
+const BarCodeScan = require("./models/barcode_scan.model");
 
 const PORT = process.env.PORT;
 app.get("/", (req, res, next) => {
@@ -55,6 +59,9 @@ app.use("/survey", surveyRoutes);
 app.use("/gameplay", gameplayRoutes);
 app.use("/game", gameRoutes);
 app.use("/descriptive", descriptiveRoutes);
+app.use("/api/v1/", customerRoutes);
+app.use("/barcodeApi", BarCodeScanRoutes);
+app.use("/cctv", CctvStreamRoutes);
 
 
 const server = app.listen(PORT, (err) => {
@@ -113,6 +120,14 @@ const program = async () => {
             console.log(result)
             if (err) throw err;
             io.sockets.emit("retail_data", result);
+          });
+        }
+        else if (e.table === 'barcode_scan') {
+          const sql = "select * from barcode_scan";
+          connection.query(sql, (err, result) => {
+            console.log(result)
+            if (err) throw err;
+            io.sockets.emit("barcode_data", result);
           });
         }
       }

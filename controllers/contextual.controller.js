@@ -50,7 +50,17 @@ exports.getData = async (req, res, next) => {
 
 
 exports.postData = async (req, res, next) => {
-    const { device_id, time, video} 
+    let device_id = req.body.device_id;
+    let playtime = req.body.playtime;
+    let video = req.body.video;
+    const contextual = new Contextual(device_id, playtime, video);
+    try {
+        const [data, _] = await contextual.save();
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        
+    }
 }
 
 // get file extension
