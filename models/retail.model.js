@@ -1,12 +1,13 @@
 const db = require('../mysql/mysqlConnection');
 class Retail{
-    constructor(device_id, played_at, phrase, product_name, quantity, packaging){ 
+    constructor(device_id, played_at, product_name, quantity, packaging, variations, rate){ 
         this.device_id = device_id;
         this.played_at = played_at;
-        this.phrase = phrase;
         this.product_name = product_name;
         this.quantity = quantity;
         this.packaging = packaging;
+        this.variations = variations;
+        this.rate = rate;
     }
 
     save(){
@@ -14,18 +15,20 @@ class Retail{
         INSERT INTO retail( 
             device_id,
             played_at,
-            phrase,
             product_name,
             quantity,
-            packaging
+            packaging, 
+            variations,
+            rate
         )
         values(
             '${this.device_id}',
             '${this.played_at}',
-            '${this.phrase}',
             '${this.product_name}',
             '${this.quantity}',
-            '${this.packaging}'
+            '${this.packaging}',
+            '${this.variations}',
+            '${this.rate}'
         );`;
         console.log(sql);
         return db.execute(sql);

@@ -662,7 +662,7 @@
         }
       }
     },
-    "/barcode/barcode": {
+    "/barcodeApi/barcode": {
       "get": {
         "description": "",
         "parameters": [],
@@ -728,11 +728,6 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
       }
     }
   }
