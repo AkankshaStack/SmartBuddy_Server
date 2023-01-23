@@ -15,7 +15,8 @@ const gameplayRoutes = require("./routes/gameplay.routes");
 const gameRoutes = require("./routes/game.routes");
 const descriptiveRoutes = require("./routes/descriptive.routes");
 const BarCodeScanRoutes = require("./routes/barCodeScan.routes");
-const CctvStreamRoutes = require("./routes/cctv.routes")
+const CctvStreamRoutes = require("./routes/cctv.routes");
+const deviceRoute = require("./routes/device.routes")
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
@@ -62,6 +63,7 @@ app.use("/descriptive", descriptiveRoutes);
 app.use("/api/v1/", customerRoutes);
 app.use("/barcodeApi", BarCodeScanRoutes);
 app.use("/cctv", CctvStreamRoutes);
+app.use("/device", deviceRoute);
 
 
 const server = app.listen(PORT, (err) => {

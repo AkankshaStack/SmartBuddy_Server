@@ -44,6 +44,10 @@ class Customers {
     let sql = `SELECT * from ${table} where mobile = ${mobile}`;
     return db.execute(sql);
   }
+  static getAllCustomers() {
+    let sql = `SELECT * from ${table}`;
+    return db.execute(sql);
+  }
 }
 
 module.exports = Customers;

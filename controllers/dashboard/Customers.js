@@ -8,7 +8,7 @@ module.exports = {
       const matched = await Customer.findByEmail(req.body.email)
       const mobileExist = await Customer.findByMobile(req.body.mobile)
       if(matched[0].length > 0 || mobileExist[0].length > 0){
-        return res.status(400).send({
+        return res.status(200).send({
           message: "Email or Mobile already registered!",
           status: 400,
         });
@@ -39,7 +39,23 @@ module.exports = {
   },
   loginCustomer: async (req, res) => {},
   resetPassword: async (req, res) => {},
-  getRegisteredCustomers: async (req, res) => {},
+  getRegisteredCustomers: async (req, res) => {
+    try {
+      const [data, _] = await Customer.getAllCustomers();
+      console.log(data)
+      return res.status(200).send({
+        message: "success",
+        data:data,
+        status: 200,
+      });    } catch {
+      (err) => {
+        console.log(err);
+        return res.status(500);
+      };
+    }
+
+
+  },
   addDevice: async (req, res) => {},
   addContextualAds: async (req, res) => {},
 };
