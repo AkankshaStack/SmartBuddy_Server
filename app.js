@@ -83,7 +83,7 @@ app.use("/cctv", CctvStreamRoutes);
 app.use("/device", deviceRoute);
 app.use("/conversation", conversationRoute);
 app.get('/', async (req, res) => {
-  res.send(`API is working fine in ${process.env.NODE_ENV} environment {v1}`)
+  res.send(`API is working fine in ${process.env.NODE_ENV} environment {v2}`)
 });
 
 const server = app.listen(PORT, (err) => {
