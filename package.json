@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "staging": "set NODE_ENV=staging& node app.js",
-    "start": "set NODE_ENV=development& nodemon app.js",
+    "start": "set NODE_ENV=production& nodemon app.js",
     "dev": "set NODE_ENV=development& nodemon app.js",
     "swagger-autogen": "node swagger.js"
   },
