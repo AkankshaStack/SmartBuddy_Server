@@ -69,6 +69,11 @@ class Device {
     let sql = `UPDATE ${database} SET user_id = "${customer_id}" WHERE user_id IS NULL OR user_id = '' AND serial_no = "${serial_no}";`;
     return db.execute(sql);
   }
+  static getDeviceByUserId(customer_id) {
+    let sql = `SELECT * FROM ${database} WHERE user_id = "${customer_id}";`;
+    console.log(sql)
+    return db.execute(sql);
+  }
   
 }
 

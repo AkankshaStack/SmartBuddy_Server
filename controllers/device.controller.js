@@ -11,11 +11,12 @@ module.exports = {
           return console.error(error.message);
         }
         const serial_no = results[0].serial_no.toString().replace(/\D/g, "");
+        console.log(serial_no);
         let no = parseFloat(serial_no);
         console.log(no);
         return res.status(200).send({
           message: "serial number sent!",
-          data: `${"SM" + (no + 1) + "DPMNDZ"}`,
+          data: `${"SB" + (no + 1) + "DPMNDZ"}`,
           status: 200,
         });
       });
