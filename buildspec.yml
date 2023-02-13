@@ -1,0 +1,42 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
+version: 0.2
+env:
+  variables:
+    ECR_REPO_NAME: smart-buddy-backend-codebase
+  secrets-manager:
+    DOCKERHUB_TOKEN: dockerHub:token
+    DOCKERHUB_USER: dockerHub:user
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+  pre_build:
+    commands:
+    #Docker Hub Login
+      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
+    # ECR Login
+      - ECR_MAIN_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_MAIN_URI}
+
+      - ECR_IMAGE_URI="${ECR_MAIN_URI}/${ECR_REPO_NAME}:latest"
+  build:
+    commands:
+      - docker build -t smart-buddy-backend-codebase:latest .
+      - echo Compiling the Node.js code
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker tag smart-buddy-backend-codebase:latest ${ECR_IMAGE_URI}
+      - docker push ${ECR_IMAGE_URI}
+      # Generate image definitions file for ECS
+      - printf '[{"name":"smart-buddy-backend-codebase","imageUri":"%s"}]'  ${ECR_IMAGE_URI} > imagedefinitions.json
+      # Include only the files required for your application to run.
+# Do not use recursively include artifacts from node_modules directory as it will include unnecessary packages 
+# used only for building and testing.
+# artifacts:
+#   files:
+#     - imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
+    - '**/*'

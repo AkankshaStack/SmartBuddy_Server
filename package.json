@@ -4,8 +4,9 @@
   "description": "A node js Backenfd for the smart buddy(IOT BASED) project",
   "main": "index.js",
   "scripts": {
-    "start": "node swagger.js",
-    "dev": "nodemon app.js",
+    "staging": "set NODE_ENV=staging& node app.js",
+    "start": "set NODE_ENV=production& nodemon app.js",
+    "dev": "set NODE_ENV=development& nodemon app.js",
     "swagger-autogen": "node swagger.js"
   },
   "author": "Kabir",
