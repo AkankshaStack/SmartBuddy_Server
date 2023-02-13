@@ -32,9 +32,6 @@ const DescriptivePlay = require("./models/descriptiveplay.model");
 const BarCodeScan = require("./models/barcode_scan.model");
 
 const PORT = process.env.PORT;
-app.get("/", (req, res, next) => {
-  res.send("HELLO");
-});
 
 app.use(express.json());
 
