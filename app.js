@@ -5,6 +5,8 @@ const cors = require("cors");
 const fs = require("fs");
 const MySQLEvents = require("@rodrigogs/mysql-events");
 const mysql = require("mysql");
+const NODE_ENV = process.env.NODE_ENV || "production";
+require('dotenv').config({ path: '.env.' + NODE_ENV });
 
 const customerRoutes = require("./routes/customer.routes");
 const authRoutes = require("./routes/auth.routes");
@@ -64,11 +66,13 @@ app.use("/api/v1/", customerRoutes);
 app.use("/barcodeApi", BarCodeScanRoutes);
 app.use("/cctv", CctvStreamRoutes);
 app.use("/device", deviceRoute);
-
+app.get('/', async (req, res) => {
+  res.send(`API is working fine in ${process.env.NODE_ENV} environment {v1}`)
+});
 
 const server = app.listen(PORT, (err) => {
   if (err) console.log("Error in starting Server: " + err);
-  else console.log(`Starting server on PORT ${PORT}`);
+  else console.log(`API is working fine in ${process.env.NODE_ENV} env. & on PORT ${PORT}`);
 });
 
 
@@ -99,48 +103,48 @@ const program = async () => {
     name: 'monitoring all statments',
     expression: 'smart_buddy.*', // listen to contextual_play database !!!
     statement: MySQLEvents.STATEMENTS.ALL, // you can choose only insert for example MySQLEvents.STATEMENTS.INSERT, but here we are choosing everything
-    onEvent: async (e) => {      
-        // console.log(e)
-        if (e.table === 'contextual_play') {
-          const sql = "select * from contextual_play";
-          connection.query(sql, (err, result) => {
-            console.log(result)
-            if (err) throw err;
-            io.sockets.emit("contextual_play_data", result);
-          });
-        } else if (e.table === 'descriptive_play') {
-          const sql = "select * from descriptive_play";
-          connection.query(sql, (err, result) => {
-            console.log(result)
-            if (err) throw err;
-            io.sockets.emit("descriptive_play_data", result);
-          });
-  
-        } else if (e.table === 'retail') {
-          const sql = "select * from retail";
-          connection.query(sql, (err, result) => {
-            console.log(result)
-            if (err) throw err;
-            io.sockets.emit("retail_data", result);
-          });
-        }
-        else if (e.table === 'barcode_scan') {
-          const sql = "select * from barcode_scan";
-          connection.query(sql, (err, result) => {
-            console.log(result)
-            if (err) throw err;
-            io.sockets.emit("barcode_data", result);
-          });
-        }
+    onEvent: async (e) => {
+      // console.log(e)
+      if (e.table === 'contextual_play') {
+        const sql = "select * from contextual_play";
+        connection.query(sql, (err, result) => {
+          console.log(result)
+          if (err) throw err;
+          io.sockets.emit("contextual_play_data", result);
+        });
+      } else if (e.table === 'descriptive_play') {
+        const sql = "select * from descriptive_play";
+        connection.query(sql, (err, result) => {
+          console.log(result)
+          if (err) throw err;
+          io.sockets.emit("descriptive_play_data", result);
+        });
+
+      } else if (e.table === 'retail') {
+        const sql = "select * from retail";
+        connection.query(sql, (err, result) => {
+          console.log(result)
+          if (err) throw err;
+          io.sockets.emit("retail_data", result);
+        });
       }
-  //     console.log(e.affectedRows[0].after)
-  //     const sql = "select * from contextual_play";
-  //     connection.query(sql, (err, result) => {
-  //       // console.log(result)
-  //       if (err) throw err;
-  //       io.sockets.emit("contextual_play_data", result);
-  //     });
-  //   }
+      else if (e.table === 'barcode_scan') {
+        const sql = "select * from barcode_scan";
+        connection.query(sql, (err, result) => {
+          console.log(result)
+          if (err) throw err;
+          io.sockets.emit("barcode_data", result);
+        });
+      }
+    }
+    //     console.log(e.affectedRows[0].after)
+    //     const sql = "select * from contextual_play";
+    //     connection.query(sql, (err, result) => {
+    //       // console.log(result)
+    //       if (err) throw err;
+    //       io.sockets.emit("contextual_play_data", result);
+    //     });
+    //   }
   });
 
   instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
