@@ -18,6 +18,6 @@ npm install -g pm2
 pm2 kill 
 
 export NODE_ENV=staging
-pm2 start -f server.js
+pm2 start -f app.js
 
 
