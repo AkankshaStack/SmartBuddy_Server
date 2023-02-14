@@ -42,5 +42,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "opencv4nodejs": {
+    "disableAutoBuild": 1
+  } 
 }
