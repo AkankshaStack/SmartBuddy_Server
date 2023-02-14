@@ -30,7 +30,6 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "mysqli": "^3.1.4",
-    "opencv4nodejs": "^5.6.0",
     "path": "^0.12.7",
     "sequelize": "^6.25.5",
     "sequelize-cli": "^6.5.2",
