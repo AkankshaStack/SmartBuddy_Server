@@ -53,6 +53,17 @@ app.use(express.json());
 // });
 
 
+// const options = {
+//   key: fs.readFileSync("../../sasha.pharynxai.com/privkey1.pem", "utf8"),
+//   cert: fs.readFileSync("../../sasha.pharynxai.com/fullchain1.pem", "utf8"),
+// };
+
+
+app.get("/", (req, res, next) => {
+  res.send("HELLO");
+});
+
+
 app.use(
   "/api-docs",
   swaggerUi.serve,

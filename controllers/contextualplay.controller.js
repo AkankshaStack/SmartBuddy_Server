@@ -26,7 +26,7 @@ exports.getData = async (req, res, next) => {
   // let user_id = req.params.user_id;
   try {
     const [data, _] = await ContextualPlay.findAll()
-    // console.log(data);
+    // console.log(data.sort((a,b)=>));
     return res.status(200).json(data);
   }
   catch {

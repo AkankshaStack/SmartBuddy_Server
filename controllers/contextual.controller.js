@@ -8,7 +8,8 @@ exports.getData = async (req, res, next) => {
 
     try {
         const [data, _] = await Contextual.findAll();
-        return res.status(200).json(data);
+        console.log("gg",data.sort())
+        return res.status(200).json(data.sort());
     }
     catch {
         (err) => {

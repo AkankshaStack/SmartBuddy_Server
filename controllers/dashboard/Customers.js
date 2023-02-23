@@ -70,35 +70,16 @@ module.exports = {
             },
             message: "LoggedIN",
           });
-
-          // Refresh token
-          if (ccheck) {
-            const refreshToken = await jwt.sign(
-              { userId: id },
-              process.env.REFRESH_TOKEN_SECRET,
-              {
-                expiresIn: "20m",
-              }
-            );
-            // Set refersh token in refreshTokens array
-            refreshTokens.push(refreshToken);
-
-            res.json({
-              accessToken,
-              refreshToken,
-            });
-
-            let refreshTokens = [];
-          }
         } else {
           console.log("Incorrect passowrd");
           return res
             .status(200)
             .send({ status: 422, message: "Incorrect password" });
         }
+      }else{
+      return res.status(404).send({ message: "All fields mandatory" });
       }
       // console.log(match);
-      return res.status(500).send({ message: "Error comparing passwords" });
     } catch (error) {
       return res
         .status(200)

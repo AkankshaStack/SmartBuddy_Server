@@ -30,7 +30,7 @@ router.get("/play/data", contextualPlayController.getData);
 
 router.post("/play/data/:contextual_id", contextualPlayController.postPlayData);
 
-// router.post("/add_video/:retail_id", contextualController.addVideo);
+// router.post("/add_video/:rgetDataetail_id", contextualController.addVideo);
 
 router.post("/upload_video/verify", contextualController.handleVerifyUpload);
 
